@@ -33,6 +33,11 @@ public class Player : KinematicBody
 		{
 			direction = direction.Normalized();
 			GetNode<Spatial>("Pivot").LookAt(Translation + direction, Vector3.Up);
+			GetNode<AnimationPlayer>("AnimationPlayer").PlaybackSpeed = 4f;
+		}
+		else
+		{
+			GetNode<AnimationPlayer>("AnimationPlayer").PlaybackSpeed = 1f;
 		}
 
 		if (IsOnFloor() && Input.IsActionPressed("jump")) velocity.y += jumpImpulse;
@@ -46,20 +51,24 @@ public class Player : KinematicBody
 		for (int i = 0; i < GetSlideCount(); i++)
 		{
 			KinematicCollision collision = GetSlideCollision(i);
-			//var collider = (PhysicsBody)collision.Collider;
-			//if (collider.IsInGroup("mobs"))
-			//{
-			//	var mob = (Mob)collider;
-			//}
-
 			if (collision.Collider is Mob mob)
 			{
 				if (Vector3.Up.Dot(collision.Normal) > 0.1)
 				{
 					mob.Squash();
-					velocity.y += bounceImpulse;
+					velocity.y = bounceImpulse;
 				}
 			}
 		}
+
+		var jumpRotation = Mathf.Deg2Rad(30f) * velocity.y / jumpImpulse;
+		var oldRotation = GetNode<Spatial>("Pivot").Rotation;
+		var newRotation = new Vector3
+		{
+			x = jumpRotation,
+			y = oldRotation.y,
+			z = oldRotation.z
+		};
+		GetNode<Spatial>("Pivot").Rotation = newRotation;
 	}
 }

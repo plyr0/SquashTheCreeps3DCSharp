@@ -11,6 +11,32 @@ height = 0.219235
 
 [sub_resource type="Animation" id=3]
 resource_name = "float"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Character:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2, 0.8, 1 ),
+"transitions": PoolRealArray( 0.225313, 0.406126, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.487101, 0 ), Vector3( 0, 0.822818, 0 ), Vector3( 0, 0.778753, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/Character:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.3, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 0.615572 ),
+"update": 0,
+"values": [ Vector3( -12.987, 0, 0 ), Vector3( 6.1464, 0, 0 ), Vector3( 19.699, 0, 0 ) ]
+}
 
 [node name="Player" type="KinematicBody"]
 collision_mask = 6
@@ -19,8 +45,8 @@ script = ExtResource( 2 )
 [node name="Pivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.115626, 0 )
 
-[node name="player" parent="Pivot" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.487101, 0 )
+[node name="Character" parent="Pivot" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.941476, -0.337079, 0, 0.337079, 0.941476, 0, 0.822818, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.715181, 0, 0, 0, 1, 0, 0.654456, 0 )
@@ -36,6 +62,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71506, -0.0347633 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "float"
 anims/float = SubResource( 3 )
 
 [connection signal="body_entered" from="MobDetector" to="." method="OnAreaBodyEntered"]
