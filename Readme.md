@@ -4,3 +4,4 @@ Debugging.csproj file is for Visual Studio Community 2019 [workaround](https://g
 
 Tested with Godot 3.3.4-mono
 
+[Play online!](https://plyr0.github.io/SquashTheCreeps3DCSharp/)
